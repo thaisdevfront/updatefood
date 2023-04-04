@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <!-- <meta name="theme-color" content="#FB6E3B"> -->
+    <title>Editar Cardápio Digital</title>
+    <link rel="shortcut icon" href="favico.png" type="image/png">
+    <link rel="stylesheet" href="assets/css/app.css">  
+    <link rel="stylesheet" href="assets/css/validation.css">  
+    <link rel="stylesheet" href="assets/css/inputs.css">  
+    <link rel="stylesheet" href="assets/css/cart.css">  
+    <link rel="stylesheet" href="assets/components/user/user.css">  
+    <link rel="stylesheet" href="assets/components/menu/menu.css">  
+    <link rel="stylesheet" href="assets/components/modal/modal.css">  
+    <link rel="stylesheet" href="assets/components/search/search.css">  
+    <link rel="stylesheet" href="assets/components/categorias/categorias.css">  
+    <link rel="stylesheet" href="assets/components/product/product.css">  
+    <link rel="stylesheet" href="assets/components/mediasocial/mediasocial.css">  
+    <link rel="stylesheet" href="assets/components/swiper/swiper.css">  
+    <link rel="stylesheet" href="assets/components/banners/banners.css">  
+    <link rel="stylesheet" href="assets/components/checkout/checkout.css">   
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100;200;300;400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  
+  <!-- <button id="deleteOrder">Delete Order</button>  -->
+  <div id="list"></div>
+  <div class="validation" id="validation" style="background-image: url(assets/images/bg-validation.png);">
+    <div class="content">
+      <img src="assets/images/logo.png" alt="">
+    </div>
+    <form action="">
+      <h1>Faça seu pedido sem filas!</h1>
+      <div class="mylabel">
+        <label style=" top: -2px; height: 48px;bottom: 0;"> 
+           <img src="assets/images/inputs/user.png" style="width: 16px;">
+        </label>
+        <input id="userName" style="margin-bottom: 5px !important;" placeholder="Digite seu nome" type="text" required> 
+      </div>
+      <div class="select mylabel">
+        <label style="
+          bottom: 0px;
+          height: 46px;
+          width: 40px;  ">  
+        <img src="assets/images/inputs/archive.png" style="margin-top: 16px;">
+        </label>
+        <select id="selectValidate" required>
+          <option value="1">Selecione a forma de retirada</option>
+          <option value="2">Viagem</option>
+          <option value="3">Mesa</option>
+        </select>
+      </div>
+      <button type="submit" onclick="validation(event)" value="submit">Cardápio
+      <img src="assets/images/inputs/circle.png">
+      </button>
+      <div class="socialmedia">
+        <h5> Siga nas Redes Sociais</h5>
+        <div class="links">
+          <a href="https://instagram.com/canoasubatuba?igshid=ZDdkNTZiNTM=" ><img src="assets/images/instagram.png"></a>
+          <a href="https://www.facebook.com/profile.php?id=100085722654035&mibextid=ZbWKwL" ><img src="assets/images/facebook.png"></a>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="user" id="user"> 
+  </div>
+  <div class="cart" id="cart">  </div>
+  <div class="checkout" id="checkout">
+    <div class="controls">  
+      <button onclick="closeCheckout()"> <i class="fa-solid fa-chevron-left"></i></button>
+      <button onclick="closeCheckout()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="content">
+      <h2>Finalizar Pedido </h2>
+    </div>
+    <form id="checkoutform" class="checkoutform" >
+      <div>
+        <label style="
+          width: 100%;
+          height: auto;
+          ">
+        Forma de retirada:
+        </label> 
+        <div class="mylabel select">
+          <label>
+          <img src="assets/images/inputs/archive.png" style="margin-top: 16px;">
+          </label>
+          <select onchange="formaRetirada()" id="selectCheckout">
+            <option value="1">Selecione a forma de retirada</option>
+            <option value="balcao">Viagem</option>
+            <option value="mesa">Mesa</option>
+          </select>
+        </div>
+        <div id="setMesa" class="mylabel"  style="display:none">
+          <label style="height:48px;"> 
+          <img src="assets/images/inputs/mesa.png" style="margin-top: 16px;">  
+          </label>
+          <input id="inputMesa"  type="number" placeholder="Digite o numero da mesa">
+        </div>
+        <div id="whatsappId"  style="display: none; ">
+          <!-- <span>Receba notificação via whatsapp </span> -->
+          <div id="setPhone" class="mylabel" >
+            <label style="height:48px;">  
+            <img src="assets/images/inputs/whats.png" style="margin-top: 16px;">  
+            </label>
+            <input id="inputMesa"  type="number" placeholder="Whatsapp para notificação">
+          </div>
+        </div>
+      </div>
+      <div style="position: relative;">
+        <label> 
+        Observações do Pedido:
+        </label>
+        <textarea id="areaObs" placeholder="Digite observações do seu pedido"></textarea>
+      </div>
+      <div id="mgg"></div>
+      <div class="total" id="totalfinesh"> 
+        <button type="submit" id="submitCheck">ENVIAR MEU PEDIDO </button>
+      </div>
+  </div>
+  </form>
+  </div>
+  <div class="menu">
+    <ul>
+      <button style="color: white;
+      font-size: 20px;
+      font-weight: 300;">+</button> 
+
+      <form class="updateMenu" >
+        <button style="color: white; font-size: 20px;  font-weight: 300;"><i style="color: white;" class="fa-solid fa-floppy-disk"></i></button> 
+      </form>
+
+      <!-- <button id="cartPreview"><img src="assets/images/shopping-cart.png" alt="" srcset=""></button> -->
+      <!-- <button><img src="assets/images/menu.png" alt="" srcset=""></button> -->
+    </ul>
+  </div>
+  <div class="search">
+    <h2 style="width:250px;">Adicione, altere ou remova Produtos</h2>
+    <form>
+      <!--           
+        <div class="mylabel">
+          <label>  <img src="assets/images/inputs/user.png" style="width: 16px;">
+          </label>
+          <input id="userName" style="margin-bottom: 5px !important;" placeholder="Digite seu nome" type="text" required> 
+        </div> -->
+      <div class="mylabel">
+        <label style="
+          top: 0px;
+          height: 46px;
+          ">  
+        <img src="assets/images/search.png" alt="">
+        </label>
+        <input  onclick="getSearch(event)" type="text" placeholder="Buscar itens...">
+        <!-- <i class="fa-solid fa-arrow-right"></i> -->
+      </div>
+      <div id="contentSearch" class="contentSearch">
+        <!-- CONTROLES -->
+        <div class="controls">
+          <button onclick="getSearch(event)">
+            <svg class="svg-inline--fa fa-chevron-left" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg="">
+              <path fill="currentColor" d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 278.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"></path>
+            </svg>
+            <!-- <i class="fa-solid fa-chevron-left"></i> Font Awesome fontawesome.com -->
+          </button>
+          <button onclick="getSearch(event)">
+            <svg class="svg-inline--fa fa-xmark" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="xmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg="">
+              <path fill="currentColor" d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"></path>
+            </svg>
+            <!-- <i class="fa-solid fa-xmark"></i> Font Awesome fontawesome.com -->
+          </button>
+        </div>
+        <div class="mylabel" style="position: inherit;width: 100%;margin-top: 50px;margin-bottom: 10px;margin-left: 10px;"> 
+          <label>
+          <img src="assets/images/search.png" alt=""> 
+          </label>
+          <input id="serchInput" type="text" placeholder="Buscar itens..."> 
+        </div>
+      </div>
+    </form>
+    <div id="searchResult"></div>
+  </div>
+  <div style="display:none;" class="banners">
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <img src="assets/images/bannercamarao.png" alt="" >
+        </div>
+        <div class="swiper-slide">
+          <img src="assets/images/bannerdrinks.png" alt="" >
+        </div>
+        <div class="swiper-slide">
+          <img src="assets/images/bannercerveja.png" alt="" >
+        </div>
+        <div class="swiper-slide">
+          <img src="assets/images/bannertapioca.png" alt="" >
+        </div>
+        <div class="swiper-slide">
+          <img src="assets/images/bannerpanqueca.png" alt="" >
+        </div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+  <div id="categories" class="categories"> </div>
+
+  <!-- MODAL -->
+  <div class="modal-container">
+    <div class="modal">
+      <div class="controls"> 
+        <button onclick="modalToggle()"><svg class="svg-inline--fa fa-chevron-left" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 278.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"></path></svg><!-- <i class="fa-solid fa-chevron-left"></i> Font Awesome fontawesome.com --></button>
+        <button onclick="modalToggle()"><svg class="svg-inline--fa fa-xmark" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="xmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg=""><path fill="currentColor" d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"></path></svg><!-- <i class="fa-solid fa-xmark"></i> Font Awesome fontawesome.com --></button>  
+    </div>
+      <form>
+        <!-- <label for="m-nome">Nome Produto</label> -->
+        <label style="  width: 100%; height: auto; ">
+          Nome do Produto:
+        </label>
+
+        <div class="mylabel">
+          <label style="height:48px;">    <!-- <img src="assets/images/inputs/whats.png" style="margin-top: 16px;">   -->  </label>
+          <input id="m-nome" type="text" required />
+        </div> 
+        <label for="m-categoria">Categoria</label>
+
+        <div class="mylabel">
+          <label style="height:48px;">    <!-- <img src="assets/images/inputs/whats.png" style="margin-top: 16px;">   -->  </label>
+            <input id="m-categoria" type="text" required />
+
+        </div> 
+        <label for="m-price">Preço</label>
+         
+        <div class="mylabel">
+          <label style="height:48px;">    <!-- <img src="assets/images/inputs/whats.png" style="margin-top: 16px;">   -->  </label>
+          <input id="m-price" type="number" required />
+
+
+
+        </div>  
+
+        <button id="btnSalvar">Salvar</button>
+      </form>
+    </div>
+  </div>
+
+</div>
+</body>
+    
+  
+    </html>
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
+ <script src="assets/components/api/apidb.js"></script>
+ <script src="assets/js/all.js"></script>
+ <script src="assets/components/relogio/relogio.js"></script>
+ <script src="assets/components/checkout/animatedCheckOut.js"></script>
+ <script src="assets/components/checkout/checkout.js"></script>
+ <script src="assets/components/categorias/categorias.js"></script>
+ 
+ <script src="assets/components/api/api-categorias.js"></script>
+ <script src="assets/components/orders/ordermore.js"></script>
+
+ <script src="assets/components/search/search.js"></script>
+ <script src="assets/js/validation.js"></script>
+ <script src="assets/js/cart.js"></script>
+ <script src="assets/components/swiper/swiper.js"></script>
+ <script src="assets/js/app.js"></script>
+ <script src="assets/components/modal/modal.js"></script>
+
+
+ <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+<script>
+   var swiper = new Swiper(".mySwiper", {
+        slidesPerView: 3,
+        spaceBetween: 30,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+      });
+</script>
+ <script type="module">
+ 
+ const firebaseConfig = {
+  apiKey: "AIzaSyAyxC6S9lIs2q6MXPJzB4rpjod3HbRXJgU",
+  authDomain: "harmonyfoodapp.firebaseapp.com",
+  databaseURL: "https://harmonyfoodapp-default-rtdb.firebaseio.com",
+  projectId: "harmonyfoodapp",
+  storageBucket: "harmonyfoodapp.appspot.com",
+  messagingSenderId: "910886750410",
+  appId: "1:910886750410:web:810fa41051ae6d12684c33",
+  measurementId: "G-9HD4J8Z2XP"
+ }; 
+
+ // Initialize Firebase
+ firebase.initializeApp(firebaseConfig); 
+
+ // Initialize Cloud Firestore and get a reference to the service
+ const db = firebase.firestore();
+
+
+ let btnSubmit=document.getElementById('submitCheck')
+ let list = document.getElementById("notifications") 
+ let form = document.querySelector(".checkoutform") 
+ let formupdateMenu = document.querySelector(".updateMenu") 
+ let horaAtual=relogio()
+ let horaReplace=horaAtual.replace(/[^0-9]/g, '')
+ let databaseDeliveryArr=[]
+ let databaseMesas=[] 
+ let entregaPed=false
+ //UPDATE
+ formupdateMenu.addEventListener('submit', function(e){
+  e.preventDefault()  
+
+  console.log(data)
+  
+  db.collection('cardapio').doc('cardapioatual').set({data})
+
+ })
+ form.addEventListener('submit', function(e){
+   e.preventDefault()  
+   let idspedidosRecebidos=[]
+   let pedidoAtual=[]
+   let btnSubmitOrder=e.submitter
+
+   
+      if(inpuMVaue!=0){ 
+        btnSubmitOrder.setAttribute("disabled", true)
+
+            let intMesaValue=String(parseInt(inpuMVaue))
+          
+
+                databaseMesas.map((baseMap)=>{ 
+                      if(baseMap.mesa==intMesaValue){ //VERIFICA EXISTENCIA  
+                          baseMap.orders.map((mapOrders)=>{ 
+                              recebePedidos.push(mapOrders) 
+                              // console.log(mapOrders.idPedido) //id pedidos entregues
+
+                          }) 
+
+                      }  
+                })
+              
+              allordersBuy.map((atualOrderMap)=>{
+                recebePedidos.push(atualOrderMap)
+                console.log(atualOrderMap.idPedido) //id pedido Atual
+                pedidoAtual.push(atualOrderMap.idPedido) 
+
+              })     
+              
+              db.collection('mesasOpen').doc(intMesaValue).set({  
+                mesa:intMesaValue,
+                orders:recebePedidos  //<==================Pedidos Recebidos
+              })
+
+              db.collection('notificacoes').doc(horaReplace).set({  
+                mesa:intMesaValue,
+                orders:allordersBuy,  //<==================Pedidos Recebidos
+                "key":horaReplace,
+                hora:horaAtual
+              }) 
+         
+
+              setTimeout(function(){
+                  // location.reload()
+              
+                 databaseMesas.map((baseMap)=>{ 
+                 if(baseMap.mesa==intMesaValue){ //VERIFICA EXISTENCIA  
+                        baseMap.orders.map((mapOrders)=>{ 
+                            idspedidosRecebidos.push(mapOrders.idPedido) 
+                           
+                            pedidoAtual.map((mapIdAtual)=>{
+                                // console.log('idAtual',mapIdAtual)
+                                idspedidosRecebidos.map((recebidosMap)=>{
+                                  // console.log('idAtual',recebidosMap)
+                                  
+                                      if(recebidosMap===mapIdAtual){
+                                        entregaPed=true
+                                        console.log(recebidosMap)  
+                                        //  alert(recebidosMap)
+                                      }else{
+                                  
+                                      entregaPed=false
+
+                                      }
+                                      
+                                }) 
+
+                            }) 
+                              
+                         
+
+                        }) 
+
+                    } 
+  
+                })
+
+
+                if(entregaPed==true){
+                  alert('O restaurante recebeu seu pedido, aguarde!')
+                  form.reset() 
+                  // location.reload()
+
+                }else{
+                  alert('Enviando novamente')
+                  // form.submit()
+                  btnSubmit.click();
+                }
+              
+
+              }, 3000);
+
+
+
+
+
+
+
+              
+              // db.collection('notificacoes').doc(horaReplace).set({  
+              //   mesa:parseInt(inpuMVaue),
+              //   orders:allordersBuy,  //<==================Pedidos Recebidos
+              //   hora:horaAtual
+              // }) 
+         
+              // alert('Pedido Enviado ao Restaurante')  
+
+     
+              setTimeout(function(){
+                  // location.reload()
+              }, 2000);
+
+      }else if(inpuMWhats!="") {
+        
+        btnSubmitOrder.setAttribute("disabled", true)
+ 
+ 
+        if(databaseDeliveryArr.length>0){
+
+          databaseDeliveryArr.map((mapDataDelivery)=>{ 
+                  let validaName=mapDataDelivery.name===inputUserName.toLowerCase() 
+                      
+                      if(validaName==true){ 
+                          mapDataDelivery.orders.map((mapOrdersDelv)=>{ 
+                            recebePedidos.push(mapOrdersDelv) 
+                          }) 
+                      } 
+ 
+                  })
+
+                      allordersBuy.map((atualOrderMap)=>{
+                            recebePedidos.push(atualOrderMap)
+                      })
+
+                      let userNameString=inputUserName.toLowerCase().replace(/\s/g, '+');
+                          db.collection('delivery').doc(userNameString).set({  
+                            "name":userNameString,
+                            "whatsapp":inpuMWhats,
+                            orders:recebePedidos  //<==================Pedidos Recebidos
+                      }) 
+
+                      const horaAtual=relogio()
+                         
+                      db.collection('notificacoes').doc(horaReplace).set({  
+                            "name":userNameString,
+                            "whatsapp":inpuMWhats,
+                            "key":horaReplace,
+
+                            orders:allordersBuy,  //<==================Pedidos Recebidos
+                            hora:horaAtual
+
+                      }) 
+                      // allordersBuy=[]
+                        
+                    
+                      setTimeout(function(){ 
+                        databaseDeliveryArr.map((delverymap)=>{ 
+                          delverymap.orders.map((mapOrdersDelivery)=>{ 
+                            
+
+                            allordersBuy.map((atuaIdOrder)=>{
+                              // console.log("ID banco",mapOrdersDelivery.idPedido)
+
+                              console.log("atualID",atuaIdOrder)
+
+                              if(atuaIdOrder.idPedido===mapOrdersDelivery.idPedido){
+                                alert('Seu pedido foi entregue ao restaurante')
+                              }
+
+                            }) 
+                          })
+                        })
+                      }, 2000);
+                   
+                    
+
+                      
+                     
+
+
+
+        }else{ 
+
+              let userNameString=inputUserName.toLowerCase().replace(/\s/g, '+');
+             
+              db.collection('delivery').doc(userNameString).set({  
+                "name":userNameString,
+                "whatsapp":inpuMWhats,
+                orders:allordersBuy  //<==================Pedidos Recebidos
+              }) 
+
+              const horaAtual=relogio()
+              
+              db.collection('notificacoes').doc(horaReplace).set({  
+                "name":userNameString,
+                "whatsapp":inpuMWhats,
+                "key":horaReplace,
+                orders:allordersBuy,  //<==================Pedidos Recebidos
+                hora:horaAtual
+              })  
+            
+             
+              setTimeout(function(){ 
+                databaseDeliveryArr.map((delverymap)=>{ 
+                  delverymap.orders.map((mapOrdersDelivery)=>{ 
+                    
+
+                    allordersBuy.map((atuaIdOrder)=>{
+                      console.log("ID banco",mapOrdersDelivery.idPedido)
+
+                      console.log("atualID",atuaIdOrder)
+
+                      if(atuaIdOrder.idPedido===mapOrdersDelivery.idPedido){
+                        alert('Seu pedido foi entregue ao restaurante')
+                      }
+
+                    }) 
+                  })
+                })
+              }, 2000);
+
+
+        }
+     
+      }else{
+        alert('Prencha todos os campos!')
+      } 
+ 
+ })
+ 
+ 
+ const currencyMenu=db.collection('cardapio') 
+ 
+ currencyMenu.onSnapshot((snapshot) => {  
+  let cardapiobd=[]
+        snapshot.forEach((doc) => { 
+          cardapiobd.push(doc.data()) 
+            
+        }); 
+
+        localStorage.setItem("cardapioAtual",JSON.stringify(cardapiobd))
+
+    }, (error) => {
+            console.log('Erro Notificações')
+
+    });
+
+ 
+ //READ MESAS
+    const ordersLab=db.collection('mesasOpen') 
+    ordersLab.onSnapshot((snapshot) => {  
+      // let databaseMesas=[]
+        snapshot.forEach((doc) => { 
+          databaseMesas.push(doc.data())
+ 
+        }); 
+    }, (error) => {
+            console.log('Erro Notificações')
+
+    });
+
+ //READ DELIVERYS 
+    const ordersLabDelivery=db.collection('delivery') 
+    ordersLabDelivery.onSnapshot((snapshot) => {  
+        snapshot.forEach((doc) => { 
+          databaseDeliveryArr.push(doc.data())
+        }); 
+    }, (error) => {
+
+        console.log('Erro Notificações')
+        // ...
+    });
+
+ </script>
+ 
+    
+</body>
+</html>
